@@ -1,127 +1,175 @@
 package com.matrix;
 
+/**
+ * @author Vadim Makarov
+ */
 public class Matrix {
-    private Complex[][] complexField;
-    private Integer[][] intField;
-    private int sizeN;
+    private Complex[][] field;
     private int sizeM;
+    private int sizeN;
 
+    /**
+     * Constructor
+     * @param complexField the two-dimensional array of complex numbers
+     */
     public Matrix(Complex[][] complexField) {
-        this.complexField = complexField;
+        this.field = complexField;
+        this.sizeN = complexField[0].length;
+        this.sizeM = complexField.length;
     }
 
-    public Matrix(Integer[][] intField) {
-        this.intField = intField;
-    }
-
-    public Matrix plus(Matrix secondMatrix) throws MatrixError {
-        if (complexField != null && secondMatrix.complexField != null) { // Блок для комплексных
-            Matrix result = new Matrix(new Complex[this.complexField.length][this.complexField[0].length]);
-            for (int i = 0; i < this.complexField.length; i++) {
-                for (int j = 0; j < this.complexField[i].length; j++) {
-                    result.complexField[i][j] = this.complexField[i][j].plus(secondMatrix.complexField[i][j]);
-                }
+    /**
+     * Constructor
+     * @param intField the two-dimensional array of integer numbers
+     */
+    public Matrix(int[][] intField) {
+        this.sizeN = intField[0].length;
+        this.sizeM = intField.length;
+        Complex[][] complexField = new Complex[sizeM][sizeN];
+        for (int i = 0; i < sizeM; i++) {
+            for (int j = 0; j < sizeN; j++) {
+                complexField[i][j] = new Complex(intField[i][j], 0);
             }
-            return result;
-        } else if (intField != null && secondMatrix.intField != null) { // Блок для действительных
-            Matrix result = new Matrix(new Integer[this.intField.length][this.intField[0].length]);
-            for (int i = 0; i < this.intField.length; i++) {
-                for (int j = 0; j < this.intField[i].length; j++) {
-                    result.intField[i][j] = this.intField[i][j] + secondMatrix.intField[i][j];
-                }
-
-            }
-            return result;
-        } else {
-            throw new MatrixError("Incompatible types");
         }
+        field = complexField;
     }
 
-    public Matrix minus(Matrix secondMatrix) throws MatrixError {
-        if (complexField != null && secondMatrix.complexField != null) { // Блок для комплексных
-            Matrix result = new Matrix(new Complex[this.complexField.length][this.complexField[0].length]);
-            for (int i = 0; i < result.complexField[0].length; i++) {
-                for (int j = 0; j < this.complexField.length; j++) {
-                    result.complexField[i][j] = this.complexField[i][j].minus(secondMatrix.complexField[i][j]);
-                }
-            }
-            return result;
-        } else if (intField != null && secondMatrix.intField != null) { // Блок для действительных
-            Matrix result = new Matrix(new Integer[this.intField.length][this.intField[0].length]);
-            for (int i = 0; i < this.intField.length; i++) {
-                for (int j = 0; j < this.intField[i].length; j++) {
-                    result.intField[i][j] = this.intField[i][j] - secondMatrix.intField[i][j];
-                }
-
-            }
-            return result;
-        } else {
-            throw new MatrixError("Incompatible types");
-        }
-    }
-
-    public Matrix multiply(Matrix secondMatrix) throws MatrixError {
-
-        if (complexField != null && secondMatrix.complexField != null) { // Блок для комплексных
-            if (this.complexField[0].length != secondMatrix.complexField.length ||
-                    this.complexField.length != secondMatrix.complexField[0].length) {
-                throw new MatrixError("Incompatible matrix sizes");
-            }
-            Matrix result = new Matrix(new Complex[this.complexField.length][this.complexField[0].length]);
-            for (int i = 0; i < result.complexField[0].length; i++) {
-                for (int j = 0; j < this.complexField.length; j++) {
-                    Complex sum = new Complex(0, 0);
-                    for (int k = 0; k < secondMatrix.complexField[0].length; k++) {
-                        sum = sum.plus(this.complexField[i][k].multiply(secondMatrix.complexField[k][j]));
-                    }
-                    result.complexField[i][j] = sum;
-                }
-            }
-            return result;
-
-        } else if (intField != null && secondMatrix.intField != null) { // Блок для действительных
-            if (this.intField[0].length != secondMatrix.intField.length ||
-                    this.intField.length != secondMatrix.intField[0].length) {
-                throw new MatrixError("Incompatible matrix sizes");
-            }
-            Matrix result = new Matrix(new Integer[this.intField.length][this.intField[0].length]);
-            for (int i = 0; i < result.intField[0].length; i++) {
-                for (int j = 0; j < this.intField.length; j++) {
-                    int sum = 0;
-                    for (int k = 0; k < secondMatrix.intField[0].length; k++) {
-                        sum += this.intField[i][k] * secondMatrix.intField[k][j];
-                    }
-                    result.intField[i][j] = sum;
-                }
-            }
-            return result;
-        } else {
-            System.out.println("Error");
-            return null;
-        }
-    }
-
+    /**
+     * Prints matrix
+     */
     public void print() {
-        if (complexField != null) { // Блок для комплексных
-            for (int i = 0; i < this.complexField.length; i++) {
-                for (int j = 0; j < this.complexField[i].length; j++) {
-                    this.complexField[i][j].print();
-                    System.out.print(" ");
-                }
-                System.out.println();
+        for (int i = 0; i < sizeM; i++) {
+            for (int j = 0; j < sizeN; j++) {
+                field[i][j].print();
+                System.out.print(" ");
             }
-        } else if (intField != null) { // Блок для действительных
-            for (int i = 0; i < this.intField.length; i++) {
-                for (int j = 0; j < this.intField[i].length; j++) {
-                    System.out.print(this.intField[i][j] + " ");
-                }
-                System.out.println();
-            }
-        } else {
-            System.out.println("Error");
+            System.out.println();
         }
+        System.out.println();
     }
 
+    /**
+     * Addition operation
+     * @param secondMatrix the second argument for binary operation
+     * @return Summation result
+     * @throws MatrixError if your Matrix has an error
+     */
+    public Matrix plus(Matrix secondMatrix) throws MatrixError {
+        if (sizeM != secondMatrix.sizeM || sizeN != secondMatrix.sizeN) {
+            throw new MatrixError("Incompatible matrix sizes");
+        }
+        Matrix result = new Matrix(new Complex[sizeM][sizeN]);
+        for (int i = 0; i < sizeM; i++) {
+            for (int j = 0; j < sizeN; j++) {
+                result.field[i][j] = field[i][j].plus(secondMatrix.field[i][j]);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Subtraction operation
+     * @param secondMatrix the second argument for binary operation
+     * @return Subtraction result
+     * @throws MatrixError if your Matrix has an error
+     */
+    public Matrix minus(Matrix secondMatrix) throws MatrixError {
+        if (sizeM != secondMatrix.sizeN) {
+            throw new MatrixError("Incompatible matrix sizes");
+        }
+        Matrix result = new Matrix(new Complex[sizeM][sizeN]);
+        for (int i = 0; i < sizeM; i++) {
+            for (int j = 0; j < sizeN; j++) {
+                result.field[i][j] = field[i][j].minus(secondMatrix.field[i][j]);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Multiplication operation
+     * @param secondMatrix the second argument for binary operation
+     * @return Multiplication result
+     * @throws MatrixError if your Matrix has an error
+     */
+    public Matrix multiply(Matrix secondMatrix) throws MatrixError {
+        if (sizeM != secondMatrix.sizeN) {
+            throw new MatrixError("Incompatible matrix sizes");
+        }
+        Matrix result = new Matrix(new Complex[sizeM][secondMatrix.sizeN]);
+        for (int i = 0; i < sizeM; i++) {
+            for (int j = 0; j < secondMatrix.sizeN; j++) {
+                Complex sum = new Complex(0, 0);
+                for (int k = 0; k < secondMatrix.sizeM; k++) {
+                    sum = sum.plus(this.field[i][k].multiply(secondMatrix.field[k][j]));
+                }
+                result.field[i][j] = sum;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Matrix transpose operation
+     * @return Transposed matrix
+     */
+    public Matrix transpose(){
+        Matrix result = new Matrix(new Complex[sizeN][sizeM]);
+        for (int i = 0; i < sizeM; i++) {
+            for (int j = 0; j < sizeN; j++) {
+                result.field[j][i] = field[i][j];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Сalculates the determinant
+     * @return determinant
+     * @throws MatrixError if your Matrix has an error
+     */
+    public Complex findDeterminant() throws MatrixError {
+        if (sizeM != sizeN) {
+            throw new MatrixError("Matrix is not square");
+        }
+        if (sizeN < 1) {
+            throw new MatrixError("Matrix is not exist");
+        }
+        if (sizeM == 1) {
+            return field[0][0];
+        } else {
+            Complex result = new Complex(0, 0);
+            for (int i = 0; i < sizeN; i++) {
+                Matrix miniMatrix = new Matrix(new Complex[sizeM-1][sizeN-1]);
+                int indexM = 0;
+                int indexN = 0;
+                for (int j = 0; j < sizeN; j++) {
+                    if (i == j){
+                        continue;
+                    }
+                    for (int k = 1; k < sizeM; k++) {
+                        miniMatrix.field[indexM][indexN] = field[k][j];
+                        indexM++;
+                    }
+                    indexM = 0;
+                    indexN++;
+                }
+                if (i % 2 == 0){
+                    result = result.plus(miniMatrix.findDeterminant().multiply(field[0][i]));
+                } else {
+                    result = result.minus(miniMatrix.findDeterminant().multiply(field[0][i]));
+                }
+            }
+            return result;
+        }
+
+
+    }
+
+
+    /**
+     * Error connected with Matrix
+     */
     static class MatrixError extends Exception {
         MatrixError(String message) {
             super(message);
