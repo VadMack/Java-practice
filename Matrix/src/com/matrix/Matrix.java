@@ -9,11 +9,21 @@ public class Matrix {
     private int sizeN;
 
     /**
+     * Empty signature constructor
+     */
+    public Matrix() throws MatrixError{
+        this(0,0);
+    }
+
+    /**
      * Constructor
      * @param sizeM the number of the rows
      * @param sizeN the number of the columns
      */
-    public Matrix(int sizeM, int sizeN) {
+    public Matrix(int sizeM, int sizeN) throws MatrixError {
+        if (sizeN < 1 || sizeM < 1) {
+            throw new MatrixError("The wrong size matrix");
+        }
         this.sizeM = sizeM;
         this.sizeN = sizeN;
         this.field = new Complex[sizeM][sizeN];
@@ -23,10 +33,14 @@ public class Matrix {
      * Constructor
      * @param complexField the two-dimensional array of complex numbers
      */
-    public Matrix(Complex[][] complexField) {
-        this.field = complexField;
+    public Matrix(Complex[][] complexField) throws MatrixError {
         this.sizeN = complexField[0].length;
         this.sizeM = complexField.length;
+        if (sizeN < 1 || sizeM < 1) {
+            throw new MatrixError("The wrong size matrix");
+        }
+
+        this.field = complexField;
     }
 
     /**
@@ -124,7 +138,7 @@ public class Matrix {
      * Matrix transpose operation
      * @return Transposed matrix
      */
-    public Matrix transpose(){
+    public Matrix transpose() throws MatrixError {
         Matrix result = new Matrix(new Complex[sizeN][sizeM]);
         for (int i = 0; i < sizeM; i++) {
             for (int j = 0; j < sizeN; j++) {
@@ -142,9 +156,6 @@ public class Matrix {
     public Complex findDeterminant() throws MatrixError {
         if (sizeM != sizeN) {
             throw new MatrixError("Matrix is not square");
-        }
-        if (sizeN < 1) {
-            throw new MatrixError("Matrix is not exist");
         }
         if (sizeM == 1) {
             return field[0][0];
