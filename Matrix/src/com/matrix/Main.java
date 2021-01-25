@@ -48,5 +48,25 @@ public class Main {
         determinant = intMatrix6.findDeterminant();
         determinant.print();
         System.out.println("\n");
+
+        Matrix matrix = new Matrix(2, 2);
+        matrix.setElement(new Complex(1, 6), 0,0);
+        matrix.setElement(new Complex(2, 7), 0,1);
+        matrix.setElement(new Complex(3, 8), 1,0);
+        matrix.setElement(new Complex(4, 9), 1,1);
+        matrix.print();
+        matrix.getElement(0,0).print();
+        System.out.println("\n");
+
+        Complex complex = new Complex();
+        complex.print();
+        System.out.println("\n");
+        complex.setReal(12);
+        complex.print();
+        System.out.println("\n");
+        complex.setImaginary(13);
+        complex.print();
+        System.out.println("\n");
+        System.out.println(complex.getReal() + " " + complex.getImaginary());
     }
 }

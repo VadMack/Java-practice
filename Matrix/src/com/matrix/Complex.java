@@ -8,6 +8,13 @@ public class Complex {
     private double imaginary;
 
     /**
+     * Empty signature constructor
+     */
+    public Complex() {
+        this(0, 0);
+    }
+
+    /**
      * Constructor
      * @param real the real part of the complex number
      * @param imaginary the imaginary part of the complex number
@@ -105,5 +112,21 @@ public class Complex {
         double r = Math.sqrt(Math.pow(this.real, 2) + Math.pow(this.imaginary, 2));
         double phi = Math.atan(this.imaginary / this.real);
         System.out.println(r + " * (cos(" + phi + ") * i * sin(" + phi + "))");
+    }
+
+    public double getReal() {
+        return real;
+    }
+
+    public void setReal(double real) {
+        this.real = real;
+    }
+
+    public double getImaginary() {
+        return imaginary;
+    }
+
+    public void setImaginary(double imaginary) {
+        this.imaginary = imaginary;
     }
 }

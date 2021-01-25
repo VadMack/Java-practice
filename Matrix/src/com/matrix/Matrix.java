@@ -10,6 +10,17 @@ public class Matrix {
 
     /**
      * Constructor
+     * @param sizeM the number of the rows
+     * @param sizeN the number of the columns
+     */
+    public Matrix(int sizeM, int sizeN) {
+        this.sizeM = sizeM;
+        this.sizeN = sizeN;
+        this.field = new Complex[sizeM][sizeN];
+    }
+
+    /**
+     * Constructor
      * @param complexField the two-dimensional array of complex numbers
      */
     public Matrix(Complex[][] complexField) {
@@ -166,6 +177,35 @@ public class Matrix {
 
     }
 
+    /**
+     * Returns one element of the matrix
+     * @param m the row index
+     * @param n the column index
+     * @return element[m][n]
+     */
+    public Complex getElement(int m, int n){
+        return this.field[m][n];
+    }
+
+    /**
+     * Puts the value in the matrix
+     * @param number the complex value
+     * @param m the row index
+     * @param n the column index
+     */
+    public void setElement(Complex number, int m, int n){
+        this.field[m][n] = number;
+    }
+
+    /**
+     * Puts the value in the matrix
+     * @param number the integer value
+     * @param m the row index
+     * @param n the column index
+     */
+    public void setElement(int number, int m, int n){
+        this.field[m][n] = new Complex(number,0);
+    }
 
     /**
      * Error connected with Matrix
