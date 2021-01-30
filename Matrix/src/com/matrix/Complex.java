@@ -85,7 +85,7 @@ public class Complex {
      * @param secondComplex the second argument for binary operation
      * @return Division result
      */
-    public Complex divide(Complex secondComplex) {
+    public Complex divide(Complex secondComplex) {// too complicated by style, need to create intermittent statements
         return new Complex((this.real * secondComplex.real + this.imaginary * secondComplex.imaginary) / (secondComplex.imaginary * secondComplex.imaginary + secondComplex.real * secondComplex.real),
                 (secondComplex.real * this.imaginary - this.real * secondComplex.imaginary) / (secondComplex.imaginary * secondComplex.imaginary + secondComplex.real * secondComplex.real));
 
