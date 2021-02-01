@@ -86,8 +86,11 @@ public class Complex {
      * @return Division result
      */
     public Complex divide(Complex secondComplex) {
-        return new Complex((this.real * secondComplex.real + this.imaginary * secondComplex.imaginary) / (secondComplex.imaginary * secondComplex.imaginary + secondComplex.real * secondComplex.real),
-                (secondComplex.real * this.imaginary - this.real * secondComplex.imaginary) / (secondComplex.imaginary * secondComplex.imaginary + secondComplex.real * secondComplex.real));
+        double numerator1 = this.real * secondComplex.real + this.imaginary * secondComplex.imaginary;
+        double numerator2 = secondComplex.real * this.imaginary - this.real * secondComplex.imaginary;
+        double denominator = secondComplex.imaginary * secondComplex.imaginary + secondComplex.real * secondComplex.real;
+        return new Complex(numerator1 / denominator,
+                numerator2 / denominator);
 
     }
 
