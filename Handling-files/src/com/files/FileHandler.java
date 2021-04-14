@@ -62,8 +62,8 @@ public class FileHandler {
         try (FileInputStream fin = new FileInputStream(path)) {
             int i;
             while ((i = fin.read()) != -1) {
-                buf.append((char) i);
-            }
+                buf.append((char) i);                        //это очень нерационально, считывать весь файл в память да еще пользуясь StringBuilder, а если он будет размером 10 Mb?
+            }                                                //стоило бы обойтись без этого буфера
         } catch (IOException exception) {
             System.err.println("FileNotFoundException: " + exception.getMessage());
         }
