@@ -4,8 +4,8 @@ public class Request {
   private int floor;
   private int targetFloor;
   private int numOfPeople;
+  // people in elevator or not
   private Status status;
-
 
   public enum Status{
     IN,
